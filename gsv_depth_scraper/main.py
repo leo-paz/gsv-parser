@@ -83,11 +83,11 @@ def panos_to_package(pth_wrk, pth_zip, name, do_tile=False, fmt="png", limit=Fal
 
         for n, (panoid, pano_img, dpth_img) in enumerate(zip(panoids, pano_imgs, dpth_imgs)):
             #panoid, pano_img, dpth_img = item[0], item[1]['pano'], item[1]['dpth']
-            tic = time.clock()
+            tic = time.perf_counter()
             # gsv_depth_scraper.xform.cut_tiles_and_package_to_zip(dpth_img, "dpth", panoid, zipobj, fmt, gsv_depth_scraper.xform.face_size(pano_img))
             gsv_depth_scraper.xform.cut_tiles_and_package_to_zip(dpth_img, "dpth", panoid, zipobj_tils, fmt)
             gsv_depth_scraper.xform.cut_tiles_and_package_to_zip(pano_img, "pano", panoid, zipobj_tils, fmt)
-            toc = time.clock()
+            toc = time.perf_counter()
             dur = int(toc-tic)
             print("cut tiles for {} ({}/{}) took {}s. at this rate, {}s ({:.2f}m) to go.".format(panoid, n+1, pair_count, dur, (pair_count-(n+1))*dur, ((pair_count-(n+1))*dur)/60.0 ))
 
