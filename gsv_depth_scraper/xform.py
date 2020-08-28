@@ -57,7 +57,7 @@ def _tiles_from_equirectangular(img, do_multithread=False):
 
 
 def _faces_from_equirectangular(img_eqrc, ret, key):
-    tic = time.perf_counter()
+    tic = time.process_time()
     img_cmap = Image.new("RGB",(img_eqrc.size[0],int(img_eqrc.size[0]*3/4)),"black")
     did_calc = _convert_back(img_eqrc,img_cmap)
 
@@ -82,7 +82,7 @@ def _faces_from_equirectangular(img_eqrc, ret, key):
     tile_left.paste( img_cmap.crop((dim*3,dim,dim*4,dim*2)), box )
 
     ret[key] = {"top":tile_top,"btm":tile_bottom,"bck":tile_back,"rht":tile_right,"fnt":tile_front,"lft":tile_left}
-    dur = int(time.perf_counter()-tic)
+    dur = int(time.process_time()-tic)
     print("face extraction {} took {}s".format(key, dur))
     return True
 

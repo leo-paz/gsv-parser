@@ -10,7 +10,7 @@ from urllib3.util import parse_url
 import gsv_depth_scraper.geom
 
 now = datetime.datetime.now()
-PANO_URL = 'http://maps.google.com/cbk?output=tile&panoid={panoid}&zoom={z}&x={x}&y={y}&key={key}&' + str(now.microsecond)
+PANO_URL = 'https://maps.google.com/cbk?sensor=true&output=tile&panoid={panoid}&zoom={z}&x={x}&y={y}&key={key}&' + str(now.microsecond)
 #STAT_URL = 'https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key={key}'
 
 GSV_TILEDIM = 512
