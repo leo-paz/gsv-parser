@@ -5,7 +5,7 @@ from PIL import Image
 
 # for signing urls
 import hashlib, hmac, base64
-from requests.packages.urllib3.util import parse_url
+from urllib3.util import parse_url
 
 import gsv_depth_scraper.geom
 
