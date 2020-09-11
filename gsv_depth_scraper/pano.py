@@ -10,9 +10,9 @@ from urllib3.util import parse_url
 import gsv_depth_scraper.geom
 
 now = datetime.datetime.now()
-PANO_URL = 'https://maps.google.com/cbk?sensor=true&output=tile&panoid={panoid}&zoom={z}&x={x}&y={y}&key={key}&' + str(now.microsecond)
+PANO_URL = 'https://maps.google.com/cbk?sensor=true&output=tile&panoid={panoid}&zoom={z}&x={x}&y={y}&key={key}&' + str(now.microsecond) + '&fov=5&heading=0&source=outdoor'
 #STAT_URL = 'https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key={key}'
-
+google_URL = 'https://maps.googleapis.com/maps/api/streetview?size=640x640&location=45.405866,-75.708367&heading=151.78&pitch=-0.76&key={key}'
 GSV_TILEDIM = 512
 GOOG_COPYRIGHT = "Google"
 
@@ -48,14 +48,17 @@ def panoid_to_img(panoid, api_key, zoom, size_img):
         print("zoom:{}\t w,h: {}x{} \t image_size:{}x{}".format(zoom,w,h,size_img[0],size_img[1]))
         return False
         
-    img = Image.new("RGB", (w*dim, h*dim), "red")
+    # img = Image.new("RGB", (w*dim, h*dim), "red")
+    img = Image.new("RGB", (640, 640), "blue")
     try:
         for y in range(h):
             for x in range(w):
-                url_pano = PANO_URL.format(panoid=panoid, z=zoom, x=x, y=y, key=api_key)
+                # url_pano = PANO_URL.format(panoid=panoid, z=zoom, x=x, y=y, key=api_key)
+                url_pano = google_URL.format(key=api_key)
                 response = requests.get(url_pano)
                 img_tile = Image.open(BytesIO(response.content))
-                img.paste(img_tile, (GSV_TILEDIM*x,GSV_TILEDIM*y))
+                # img.paste(img_tile, (GSV_TILEDIM*x,GSV_TILEDIM*y))
+                img.paste(img_tile,(0,0))
     except:
         print("!!!! FAILED TO DOWNLOAD PANO for {}".format(panoid))
         return False
