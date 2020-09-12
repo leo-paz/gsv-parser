@@ -12,6 +12,12 @@ import gsv_depth_scraper.geom
 now = datetime.datetime.now()
 PANO_URL = 'http://maps.google.com/cbk?output=tile&panoid={panoid}&zoom={z}&x={x}&y={y}&key={key}&' + str(now.microsecond)
 #STAT_URL = 'https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key={key}'
+STREET_URL = 'https://maps.googleapis.com/maps/api/streetview?size={size}&location={location}&heading={heading}&pitch=-{pitch}&key={key}'
+
+SIZE = '640x640'
+HEADING = '0;90;180;270'
+FOV = '0;90;120'
+PITCH = '0;90'
 
 GSV_TILEDIM = 512
 GOOG_COPYRIGHT = "Google"
@@ -36,8 +42,8 @@ def load_panos_and_package_to_zip(pth_wrk, zipobj, fmt, limit=False):
         panoids.append(panoid)
 
     return panoids, pano_imgs
-   
-    
+
+
 def panoid_to_img(panoid, api_key, zoom, size_img):
     w,h = 2**zoom, 2**(zoom-1)
     dim = False
@@ -63,11 +69,15 @@ def panoid_to_img(panoid, api_key, zoom, size_img):
     return img.transpose(Image.FLIP_LEFT_RIGHT)
 
 
-def gpts_to_panoids(gjpts, api_key):
+""" def gpts_to_panoids(gjpts, api_key):
     locstr = gsv_depth_scraper.geom.concat_gpts_to_goog_str(gjpts)
     apiargs = {
         'location': locstr,
-        'key': api_key
+        'key': api_key,
+        'size': SIZE,
+        'heading': HEADING,
+        'fov': FOV,
+        'pitch': PITCH
     }
     api_list = google_streetview.helpers.api_list(apiargs)
     results = google_streetview.api.results(api_list)
@@ -87,8 +97,27 @@ def gpts_to_panoids(gjpts, api_key):
                 continue
 
         panoids.add( meta['pano_id'] )
-    return list(panoids)
+    return list(panoids) """
 
+def gpts_to_images(gjpts, api_key):
+    locstr = gsv_depth_scraper.geom.concat_gpts_to_goog_str(gjpts)
+    apiargs = {
+        'location': locstr,
+        'key': api_key,
+        'size': SIZE,
+        'heading': HEADING,
+        'fov': FOV,
+        'pitch': PITCH
+    }
+    api_list = google_streetview.helpers.api_list(apiargs)
+    results = google_streetview.api.results(api_list)
+
+    results.preview()
+
+    # results.download_links('C:\\Users\\omarl\\Desktop\\FourthYearProject\\scrapedPanos')
+
+    panoids = set()
+    return list(panoids)
     
 # from https://gist.github.com/christ0pher/f2c4748a09ed31cf71a8
 # NOT USED

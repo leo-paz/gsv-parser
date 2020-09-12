@@ -6,19 +6,19 @@ import gsv_depth_scraper.pano, gsv_depth_scraper.dpth, gsv_depth_scraper.xform, 
 # --------------------
 # "scrape" mode
 # --------------------
-def gjpts_to_panos(pth_geo, api_key, pth_wrk, name, zoom=3, fmt="png", delay=False, limit=False, mapbox_key=False):
+def gjpts_to_panos(pth_geo, api_key, pth_wrk, name, fmt="png", delay=False, limit=False):
     print("loading coords from geojson: {}".format(pth_geo))
-    gpts = gsv_depth_scraper.geom.load_gpts(pth_geo)
+    gpts = gsv_depth_scraper.geom.load_gpts(pth_geo) # returns list of lat and long pairs
     if limit:
         print("limiting loaded coords from {} to {}".format(len(gpts),limit))
         gpts = gpts[:limit]
 
     print("getting panoids for {} sample locations".format(len(gpts)))
-    panoids = gsv_depth_scraper.pano.gpts_to_panoids(gpts, api_key) # panoids are unique
+    panoids = gsv_depth_scraper.pano.gpts_to_images(gpts, api_key) # panoids are unique
     print("parsed {} sample locations and found {} unique panoids".format(len(gpts),len(panoids)))
     
     mapplot_data = {}
-    for n, panoid in enumerate(panoids):
+    """  for n, panoid in enumerate(panoids)
         dpth_inf, size_img, size_til = gsv_depth_scraper.dpth.panoid_to_depthinfo(panoid)
         pano_img = gsv_depth_scraper.pano.panoid_to_img(panoid, api_key, zoom, size_img)
         if not pano_img: continue
@@ -37,12 +37,12 @@ def gjpts_to_panos(pth_geo, api_key, pth_wrk, name, zoom=3, fmt="png", delay=Fal
         if delay:
             jitter = ((random_sample()-0.5)*2) * delay * 0.3 # +/- 30% of delay
             print("... pausing for {0:.2f}s".format(delay + jitter))
-            time.sleep(delay + jitter)
+            time.sleep(delay + jitter) """
 
     mapplot_geojson = gsv_depth_scraper.geom.locs_to_geojson(mapplot_data)
-    if mapbox_key:
+    """  if mapbox_key:
         pth_map = os.path.join(pth_wrk,"__map.html")
-        gsv_depth_scraper.geom.plot_map(mapplot_geojson, pth_map, mapbox_key, True)
+        gsv_depth_scraper.geom.plot_map(mapplot_geojson, pth_map, mapbox_key, True) """
     
     with open(os.path.join(pth_wrk,"__result_locs.geojson"), 'w') as f:
         json.dump(mapplot_geojson, f, separators=(',', ':')) # save results  
