@@ -16,8 +16,8 @@ STREET_URL = 'https://maps.googleapis.com/maps/api/streetview?size={size}&locati
 
 SIZE = '640x640'
 HEADING = '0;90;180;270'
-FOV = '0;90;120'
-PITCH = '0;90'
+FOV = '45'
+PITCH = '0'
 
 GSV_TILEDIM = 512
 GOOG_COPYRIGHT = "Google"
@@ -114,7 +114,7 @@ def gpts_to_images(gjpts, api_key):
 
     results.preview()
 
-    # results.download_links('C:\\Users\\omarl\\Desktop\\FourthYearProject\\scrapedPanos')
+    results.download_links('C:\\Users\\omarl\\Desktop\\FourthYearProject\\scrapedPanos')
 
     panoids = set()
     return list(panoids)
