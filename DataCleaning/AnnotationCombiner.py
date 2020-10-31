@@ -1,7 +1,7 @@
 import json
 import os
 
-path = 'C:\\Users\\omarl\\Desktop\\FourthYearProject\\trainAnnotations\\COCO\\'
+path = 'C:\\Users\\omarl\\Desktop\\FourthYearProject\\trainAnnotations\\COCO\\Final\\'
 entries = os.listdir(path)
 entries.sort()
 
