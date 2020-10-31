@@ -112,8 +112,6 @@ def gpts_to_images(gjpts, api_key):
     api_list = google_streetview.helpers.api_list(apiargs)
     results = google_streetview.api.results(api_list)
 
-    results.preview()
-
     results.download_links('C:\\Users\\omarl\\Desktop\\FourthYearProject\\scrapedPanos')
 
     panoids = set()
