@@ -16,7 +16,7 @@ def main(args):
 
     if args.mode == "scrape" or args.mode == "scrape_and_process":
         print("Scraping...\nname: {}\t zoom: {}\t delay: {}\t limit: {}\n========".format(name, args.zoom, args.delay, limit))
-        gsv_depth_scraper.main.gjpts_to_panos(args.geojson, args.key, pth_wrk, name, zoom=args.zoom, delay=args.delay, limit=limit, mapbox_key=args.mapbox_key)
+        gsv_depth_scraper.main.gjpts_to_panos(args.geojson, args.key, pth_wrk, name, delay=args.delay, limit=limit)
     if args.mode == "scrape_and_process": print("========")
     if args.mode == "process" or args.mode == "scrape_and_process":
         print("Processing...\nname: {}\n========".format(name))
